@@ -20,7 +20,7 @@ pip install turtle
 Running the script is really simple! Just open a terminal in the folder where your script is located and run the following command:
 
 ```sh
-python Caterpillar.py
+python caterpillar.py
 ```
 ## 📺 Demo
 <p align="center">
