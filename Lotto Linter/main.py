@@ -24,22 +24,36 @@ def get_nums():
     mega_millions_data.to_csv('data/mm2022.csv', header=header_list, index=False)
     power_ball_data.to_csv('data/pb2022.csv', header=header_list, index=False)
     mega_millions = pd.read_csv('data/mm2022.csv')
-    power_ball = pd.read_csv('data/pb2022.csv')
+    mega_million = mega_millions[mega_millions['Year'] >= 2016]
+    power_balls = pd.read_csv('data/pb2022.csv')
+    power_ball = power_balls[power_balls['Year'] >= 2016]
 
-    mega_list = []
-    power_list = []
+    mega_list_common = []
+    mega_list_rare = []
+    power_list_common = []
+    power_list_rare = []
 
     fetch = ['Num1', 'Num2', 'Num3', 'Num4', 'Num5', 'MegaPower']
     for item in fetch:
-        pick = mega_millions[item].mode().iloc[0]
-        mega_list.append(pick)
+        s = mega_million[item].value_counts()
+        highest = s.index[0]
+        lowest = s.index[-1]
+        mega_list_common.append(highest)
+        mega_list_rare.append(lowest)
+        # pick = mega_million[item].mode().iloc[0]
+        # mega_list.append(pick)
 
     for item in fetch:
-        pick = power_ball[item].mode().iloc[0]
-        power_list.append(pick)
+        s = power_ball[item].value_counts()
+        highest = s.index[0]
+        lowest = s.index[-1]
+        power_list_common.append(highest)
+        power_list_rare.append(lowest)
+        # pick = power_ball[item].mode().iloc[0]
+        # power_list.append(pick)
 
-    mega_label['text'] = f'Mega Millions: {mega_list}'
-    power_label['text'] = f'Power Ball: {power_list}'
+    mega_label['text'] = f'Mega Millions: {mega_list_common} || {mega_list_rare}'
+    power_label['text'] = f'Power Ball: {power_list_common} || {power_list_rare}'
 
 
 # Display
